@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:stepper/horizontal_stepper.dart';
+import 'package:stepper/models/models.dart';
+import 'package:stepper/widgets/vertical_stepper.dart';
+import 'package:stepper/widgets/horizontal_stepper.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,10 +15,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Stepper',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        useMaterial3: true
-      ),
+      theme: ThemeData(primarySwatch: Colors.blue, useMaterial3: true),
       home: const MyHomePage(title: 'Stepper Widget'),
     );
   }
@@ -25,15 +24,6 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
 
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
   final String title;
 
   @override
@@ -41,16 +31,61 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final List<FlightDetail> flightDetails = [
+    FlightDetail(
+      flightName: "Air Asia",
+      flightNumber: "I5-1562",
+      departureName: "Bangalore",
+      departureCode: "BLR",
+      departureTerminal: "Terminal 2",
+      arrivalName: "Bhubaneshwar",
+      arrivalCode: "BBI",
+      arrivalTerminal: "Terminal 1",
+      departureTime: DateTime(2023, 5, 11, 11, 55),
+      arrivalTime: DateTime(2023, 5, 11, 13, 55),
+    ),
+    FlightDetail(
+      flightName: "Air Asia",
+      flightNumber: "I5-766",
+      departureName: "Bhubaneshwar",
+      departureCode: "BBI",
+      departureTerminal: "Terminal 1",
+      arrivalName: "Bhubaneshwar",
+      arrivalCode: "BBI",
+      arrivalTerminal: "Terminal 1",
+      departureTime: DateTime(2023, 5, 11, 18, 25),
+      arrivalTime: DateTime(2023, 5, 11, 20, 45),
+    )
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: const Center(
-        child: MyStepper(timings: ["Till 11th Jun'23, 02:00 PM", "checking 2nd step", "checking 3rd step", "From 11th Jun'23 02:00 PM, till 14th Jun'23, 02:00 PM"],charges: ["\$0", "checking", "checking", "100% of the booking amount will be charged"],)
-      ) // This trailing comma makes auto-formatting nicer for build methods.
-    );
+        appBar: AppBar(
+          title: Text(widget.title),
+        ),
+        body: Center(
+            child: Column(
+          children: [
+            const VerticalStepper(
+              timings: [
+                "Till 11th Jun'23, 02:00 PM",
+                "checking 2nd step",
+                "checking 3rd step",
+                "From 11th Jun'23 02:00 PM, till 14th Jun'23, 02:00 PM"
+              ],
+              charges: [
+                "\$0",
+                "checking",
+                "checking",
+                "100% of the booking amount will be charged"
+              ],
+            ),
+            HorizontalStepper(
+              flightDetails: flightDetails,
+            ),
+          ],
+        )) // This trailing comma makes auto-formatting nicer for build methods.
+        );
   }
 }
