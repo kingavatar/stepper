@@ -30,13 +30,34 @@ Overall, the architecture and design of this project were carefully considered t
 
 ## 📱 Screenshots
 
-### :left_right_arrow: Horizontal Stepper Screenshot
+<table align="center">
+<tr align="center">
+<td>Widgets in Android Emulator</td>
+</tr>
+<tr>
+<td><img alt="Widgets in Android" src="https://raw.githubusercontent.com/kingavatar/stepper/assets/stepper.gif"  height="500" /></td>
+</tr>
+</table>
 
-<!-- ![HorizontalStepper](screenshots/horizontal_stepper.png) -->
+<table align="center">
+<tr align="center">
+<td>Vertical Stepper</td>
+</tr>
+<tr> 
+<td>
+<img alt="Vertical Widget" src="https://raw.githubusercontent.com/kingavatar/stepper/assets/vertical.png" />
+</td>
+</tr>
+</table>
 
-### :arrow_up_down: Vertical Stepper Screenshot
-
-<!-- ![VerticalStepper](screenshots/vertical_stepper.png) -->
+<table align="center">
+<tr align="center">
+<td>Horizontal Stepper</td>
+</tr>
+<tr>
+<td> <img alt="Horizontal Widget" src="https://raw.githubusercontent.com/kingavatar/stepper/assets/horizontal.png" /></td>
+</tr>
+</table>
 
 ## 📜 Usage
 
