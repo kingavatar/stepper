@@ -67,18 +67,18 @@ class _MyHomePageState extends State<MyHomePage> {
         body: Center(
             child: Column(
           children: [
-            const VerticalStepper(
-              timings: [
+            VerticalStepper(
+              timings: const [
                 "Till 11th Jun'23, 02:00 PM",
                 "checking 2nd step",
                 "checking 3rd step",
-                "From 11th Jun'23 02:00 PM, till 14th Jun'23, 02:00 PM"
+                "From 11th Jun'23 02:00 PM, till 14th Jun'23, 02:00 PM",
               ],
-              charges: [
+              charges: const [
                 "\$0",
                 "checking",
                 "checking",
-                "100% of the booking amount will be charged"
+                "100% of the booking amount will be charged",
               ],
             ),
             HorizontalStepper(

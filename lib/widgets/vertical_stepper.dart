@@ -5,12 +5,20 @@ import 'package:stepper/widgets/stepper_circle.dart';
 class VerticalStepper extends StatelessWidget {
   final List<String> timings;
   final List<String> charges;
+  final List<String> mytimings = List.empty(growable: true);
+  final List<String> mycharges = List.empty(growable: true);
 
-  const VerticalStepper(
-      {super.key, required this.timings, required this.charges});
+  VerticalStepper({super.key, required this.timings, required this.charges});
 
   @override
   Widget build(BuildContext context) {
+    mytimings.addAll(timings);
+    mycharges.addAll(charges);
+    if (timings.length <= charges.length) {
+      mytimings.addAll(List.filled(charges.length - timings.length, ""));
+    } else {
+      mycharges.addAll(List.filled(timings.length - charges.length, ""));
+    }
     return Card(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
@@ -36,7 +44,7 @@ class VerticalStepper extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: charges
+                children: mycharges
                     .asMap()
                     .map((index, value) => MapEntry(
                         index,
@@ -44,10 +52,10 @@ class VerticalStepper extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             StepperIndicators(
-                                isLast: index == charges.length - 1),
+                                isLast: index == mycharges.length - 1),
                             Expanded(
                               child: Text(
-                                timings[index],
+                                mytimings[index],
                                 style: Theme.of(context).textTheme.labelSmall,
                               ),
                             ),
