@@ -65,29 +65,31 @@ class _MyHomePageState extends State<MyHomePage> {
         appBar: AppBar(
           title: Text(widget.title),
         ),
-        body: Center(
-            child: Column(
-          children: [
-            const TabStepper(),
-            // VerticalStepper(
-            //   timings: const [
-            //     "Till 11th Jun'23, 02:00 PM",
-            //     "checking 2nd step",
-            //     "checking 3rd step",
-            //     "From 11th Jun'23 02:00 PM, till 14th Jun'23, 02:00 PM",
-            //   ],
-            //   charges: const [
-            //     "\$0",
-            //     "checking",
-            //     "checkingtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest",
-            //     "100% of the booking amount will be charged",
-            //   ],
-            // ),
-            HorizontalStepper(
-              flightDetails: flightDetails,
-            ),
-          ],
-        )) // This trailing comma makes auto-formatting nicer for build methods.
+        body: SingleChildScrollView(
+          child: Center(
+              child: Column(
+            children: [
+              const TabStepper(),
+              // VerticalStepper(
+              //   timings: const [
+              //     "Till 11th Jun'23, 02:00 PM",
+              //     "checking 2nd step",
+              //     "checking 3rd step",
+              //     "From 11th Jun'23 02:00 PM, till 14th Jun'23, 02:00 PM",
+              //   ],
+              //   charges: const [
+              //     "\$0",
+              //     "checking",
+              //     "checkingtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest",
+              //     "100% of the booking amount will be charged",
+              //   ],
+              // ),
+              HorizontalStepper(
+                flightDetails: flightDetails,
+              ),
+            ],
+          )),
+        ) // This trailing comma makes auto-formatting nicer for build methods.
         );
   }
 }
