@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stepper/models/models.dart';
+import 'package:stepper/widgets/tabs.dart';
 import 'package:stepper/widgets/vertical_stepper.dart';
 import 'package:stepper/widgets/horizontal_stepper.dart';
 
@@ -47,7 +48,7 @@ class _MyHomePageState extends State<MyHomePage> {
     FlightDetail(
       flightName: "Air Asia",
       flightNumber: "I5-766",
-      departureName: "Bhubaneshwar",
+      departureName: "Bhubaneshwar Bhubaneshwar Bhubaneshwar Bhubaneshwar",
       departureCode: "BBI",
       departureTerminal: "Terminal 1",
       arrivalName: "Bhubaneshwar",
@@ -67,20 +68,21 @@ class _MyHomePageState extends State<MyHomePage> {
         body: Center(
             child: Column(
           children: [
-            VerticalStepper(
-              timings: const [
-                "Till 11th Jun'23, 02:00 PM",
-                "checking 2nd step",
-                "checking 3rd step",
-                "From 11th Jun'23 02:00 PM, till 14th Jun'23, 02:00 PM",
-              ],
-              charges: const [
-                "\$0",
-                "checking",
-                "checking",
-                "100% of the booking amount will be charged",
-              ],
-            ),
+            const TabStepper(),
+            // VerticalStepper(
+            //   timings: const [
+            //     "Till 11th Jun'23, 02:00 PM",
+            //     "checking 2nd step",
+            //     "checking 3rd step",
+            //     "From 11th Jun'23 02:00 PM, till 14th Jun'23, 02:00 PM",
+            //   ],
+            //   charges: const [
+            //     "\$0",
+            //     "checking",
+            //     "checkingtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest",
+            //     "100% of the booking amount will be charged",
+            //   ],
+            // ),
             HorizontalStepper(
               flightDetails: flightDetails,
             ),

@@ -48,25 +48,27 @@ class VerticalStepper extends StatelessWidget {
                     .asMap()
                     .map((index, value) => MapEntry(
                         index,
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            StepperIndicators(
-                                isLast: index == mycharges.length - 1),
-                            Expanded(
-                              child: Text(
-                                mytimings[index],
-                                style: Theme.of(context).textTheme.labelSmall,
+                        IntrinsicHeight(
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              StepperIndicators(
+                                  isLast: index == mycharges.length - 1),
+                              Expanded(
+                                child: Text(
+                                  mytimings[index],
+                                  style: Theme.of(context).textTheme.labelSmall,
+                                ),
                               ),
-                            ),
-                            Expanded(
-                              child: Text(
-                                value,
-                                style: Theme.of(context).textTheme.labelSmall,
-                                textAlign: TextAlign.right,
+                              Expanded(
+                                child: Text(
+                                  value,
+                                  style: Theme.of(context).textTheme.labelSmall,
+                                  textAlign: TextAlign.right,
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         )))
                     .values
                     .toList(),
@@ -121,8 +123,9 @@ class StepperIndicators extends StatelessWidget {
       child: isLast
           ? Column(
               children: const [
-                SizedBox(
-                  height: 20,
+                Expanded(
+                  // SizedBox(
+                  // height: 20,
                   child: VerticalDivider(
                     color: Colors.green,
                     endIndent: 2,
@@ -135,8 +138,9 @@ class StepperIndicators extends StatelessWidget {
           : Column(
               children: const [
                 StepperCircle(size: 10, color: Colors.green),
-                SizedBox(
-                  height: 40,
+                Expanded(
+                  // SizedBox(
+                  // height: 40,
                   child: VerticalDivider(
                     color: Colors.green,
                     thickness: 2,

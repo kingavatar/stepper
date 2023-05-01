@@ -13,14 +13,17 @@ class HorizontalStepper extends StatelessWidget {
       child: Card(
         child: Padding(
           padding: const EdgeInsets.all(20.0),
-          child: Wrap(
-            spacing: -40,
+          child: Row(
+            // spacing: -40,
             children: List.generate(flightDetails.length, (index) {
               final duration = (index != flightDetails.length - 1)
                   ? "${flightDetails[index + 1].departureTime.difference(flightDetails[index].arrivalTime).inHours.toString().padLeft(2, '0')}h ${(flightDetails[index + 1].departureTime.difference(flightDetails[index].arrivalTime).inMinutes % 60).toString().padLeft(2, '0')}m"
                   : "";
               return [
-                StepperIndicators(flightDetail: flightDetails[index]),
+                StepperIndicators(
+                    flightDetail: flightDetails[index],
+                    firstItem: index != 0,
+                    endItem: duration != ""),
                 (index != flightDetails.length - 1)
                     ? DashedStepperIndicators(
                         duration: duration,
@@ -39,6 +42,23 @@ class HorizontalStepper extends StatelessWidget {
   }
 }
 
+class DashedLinePainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    double dashWidth = 5, dashSpace = 5, startX = 0;
+    final paint = Paint()
+      ..color = HSLColor.fromColor(Colors.red).withLightness(0.8).toColor()
+      ..strokeWidth = 2;
+    while (startX < size.width) {
+      canvas.drawLine(Offset(startX, 0), Offset(startX + dashWidth, 0), paint);
+      startX += dashWidth + dashSpace;
+    }
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) => false;
+}
+
 class DashedSeparator extends StatelessWidget {
   final double height;
   final Color color;
@@ -48,7 +68,7 @@ class DashedSeparator extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
-        final boxWidth = constraints.constrainWidth();
+        final boxWidth = constraints.maxWidth;
         const dashWidth = 5.0;
         final dashHeight = height;
         final dashCount = (boxWidth / (2 * dashWidth)).floor();
@@ -72,7 +92,13 @@ class DashedSeparator extends StatelessWidget {
 
 class StepperIndicators extends StatelessWidget {
   final FlightDetail flightDetail;
-  const StepperIndicators({super.key, required this.flightDetail});
+  final bool firstItem;
+  final bool endItem;
+  const StepperIndicators(
+      {super.key,
+      required this.flightDetail,
+      required this.firstItem,
+      required this.endItem});
 
   @override
   Widget build(BuildContext context) {
@@ -82,54 +108,67 @@ class StepperIndicators extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            const SizedBox(height: 62),
-            Row(
-              children: [
-                const SizedBox(
-                  width: 60,
-                ),
-                const StepperCircle(
-                  size: 8,
-                  color: Colors.red,
-                ),
-                SizedBox(
-                  width: 60,
-                  child: Divider(
-                    thickness: 2,
-                    indent: 2,
-                    endIndent: 0,
-                    color: HSLColor.fromColor(Colors.blue)
-                        .withLightness(0.8)
-                        .toColor(),
+        IntrinsicWidth(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              const SizedBox(height: 62),
+              Row(
+                children: [
+                  // const SizedBox(
+                  //   width: 60,
+                  // ),
+                  firstItem && !endItem
+                      ? Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: 15.0),
+                            child: CustomPaint(
+                              painter: DashedLinePainter(),
+                            ),
+                          ),
+                        )
+                      : const Spacer(),
+                  const StepperCircle(
+                    size: 8,
+                    color: Colors.red,
                   ),
-                ),
-              ],
-            ),
-            Text(
-              // "11:45",
-              "${flightDetail.departureTime.hour.toString().padLeft(2, '0')}:${flightDetail.departureTime.minute.toString().padLeft(2, '0')}",
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
-            Text(
-              // "11th May 2023",
-              "${flightDetail.departureTime.day}${flightDetail.departureTime.ordinalSuffix} ${flightDetail.departureTime.monthName} ${flightDetail.departureTime.year}",
-              style: Theme.of(context).textTheme.labelSmall,
-            ),
-            Text(
-              // "Bangalore (BLR)",
-              "${flightDetail.departureName} (${flightDetail.departureCode})",
-              style: Theme.of(context).textTheme.labelLarge,
-            ),
-            Text(
-              // "Terminal 2",
-              flightDetail.departureTerminal,
-              style: Theme.of(context).textTheme.labelLarge,
-            ),
-          ],
+                  Expanded(
+                    // SizedBox(
+                    // width: 60,
+                    child: Divider(
+                      thickness: 2,
+                      indent: 2,
+                      endIndent: 0,
+                      color: HSLColor.fromColor(Colors.blue)
+                          .withLightness(0.8)
+                          .toColor(),
+                    ),
+                  ),
+                ],
+              ),
+              Text(
+                // "11:45",
+                "${flightDetail.departureTime.hour.toString().padLeft(2, '0')}:${flightDetail.departureTime.minute.toString().padLeft(2, '0')}",
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+              Text(
+                // "11th May 2023",
+                "${flightDetail.departureTime.day}${flightDetail.departureTime.ordinalSuffix} ${flightDetail.departureTime.monthName} ${flightDetail.departureTime.year}",
+                style: Theme.of(context).textTheme.labelSmall,
+              ),
+              Text(
+                // "Bangalore (BLR)",
+                "${flightDetail.departureName} (${flightDetail.departureCode})",
+                style: Theme.of(context).textTheme.labelLarge,
+              ),
+              Text(
+                // "Terminal 2",
+                flightDetail.departureTerminal,
+                style: Theme.of(context).textTheme.labelLarge,
+              ),
+            ],
+          ),
         ),
         SizedBox(
           height: 100,
@@ -214,53 +253,66 @@ class StepperIndicators extends StatelessWidget {
             ),
           ),
         ),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const SizedBox(height: 62),
-            Row(
-              children: [
-                SizedBox(
-                  width: 60,
-                  child: Divider(
-                    thickness: 2,
-                    endIndent: 2,
-                    color: HSLColor.fromColor(Colors.blue)
-                        .withLightness(0.8)
-                        .toColor(),
+        IntrinsicWidth(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const SizedBox(height: 62),
+              Row(
+                children: [
+                  Expanded(
+                    // SizedBox(
+                    //   width: 60,
+                    child: Divider(
+                      thickness: 2,
+                      endIndent: 2,
+                      color: HSLColor.fromColor(Colors.blue)
+                          .withLightness(0.8)
+                          .toColor(),
+                    ),
                   ),
-                ),
-                const StepperCircle(
-                  size: 8,
-                  color: Colors.red,
-                ),
-                const SizedBox(
-                  width: 60,
-                ),
-              ],
-            ),
-            Text(
-              // "11:45",
-              "${flightDetail.arrivalTime.hour.toString().padLeft(2, '0')}:${flightDetail.arrivalTime.minute.toString().padLeft(2, '0')}",
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
-            Text(
-              // "11th May 2023",
-              "${flightDetail.arrivalTime.day}${flightDetail.arrivalTime.ordinalSuffix} ${flightDetail.arrivalTime.monthName} ${flightDetail.arrivalTime.year}",
-              style: Theme.of(context).textTheme.labelSmall,
-            ),
-            Text(
-              // "Bangalore (BLR)",
-              "${flightDetail.arrivalName} (${flightDetail.arrivalCode})",
-              style: Theme.of(context).textTheme.labelLarge,
-            ),
-            Text(
-              // "Terminal 2",
-              flightDetail.arrivalCode,
-              style: Theme.of(context).textTheme.labelLarge,
-            ),
-          ],
+                  const StepperCircle(
+                    size: 8,
+                    color: Colors.red,
+                  ),
+                  // const SizedBox(
+                  //   width: 60,
+                  // ),
+                  !firstItem && endItem
+                      ? Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 15.0),
+                            child: CustomPaint(
+                              painter: DashedLinePainter(),
+                            ),
+                          ),
+                        )
+                      : const Spacer(),
+                ],
+              ),
+              Text(
+                // "11:45",
+                "${flightDetail.arrivalTime.hour.toString().padLeft(2, '0')}:${flightDetail.arrivalTime.minute.toString().padLeft(2, '0')}",
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+              Text(
+                // "11th May 2023",
+                "${flightDetail.arrivalTime.day}${flightDetail.arrivalTime.ordinalSuffix} ${flightDetail.arrivalTime.monthName} ${flightDetail.arrivalTime.year}",
+                style: Theme.of(context).textTheme.labelSmall,
+              ),
+              Text(
+                // "Bangalore (BLR)",
+                "${flightDetail.arrivalName} (${flightDetail.arrivalCode})",
+                style: Theme.of(context).textTheme.labelLarge,
+              ),
+              Text(
+                // "Terminal 2",
+                flightDetail.arrivalCode,
+                style: Theme.of(context).textTheme.labelLarge,
+              ),
+            ],
+          ),
         ),
       ],
     );
@@ -286,18 +338,22 @@ class DashedStepperIndicators extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             const SizedBox(height: 70),
-            SizedBox(
-              width: 60,
-              child: DashedSeparator(
-                height: 2,
-                color:
-                    HSLColor.fromColor(Colors.red).withLightness(0.8).toColor(),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 5.0),
+              child: SizedBox(
+                width: 30,
+                child: DashedSeparator(
+                  height: 2,
+                  color: HSLColor.fromColor(Colors.red)
+                      .withLightness(0.8)
+                      .toColor(),
+                ),
               ),
             ),
           ],
         ),
         SizedBox(
-          height: 146,
+          height: 160,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
@@ -362,12 +418,16 @@ class DashedStepperIndicators extends StatelessWidget {
         Column(
           children: [
             const SizedBox(height: 70),
-            SizedBox(
-              width: 60,
-              child: DashedSeparator(
-                height: 2,
-                color:
-                    HSLColor.fromColor(Colors.red).withLightness(0.8).toColor(),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 5.0),
+              child: SizedBox(
+                width: 30,
+                child: DashedSeparator(
+                  height: 2,
+                  color: HSLColor.fromColor(Colors.red)
+                      .withLightness(0.8)
+                      .toColor(),
+                ),
               ),
             ),
           ],
