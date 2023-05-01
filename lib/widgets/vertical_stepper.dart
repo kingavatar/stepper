@@ -55,16 +55,29 @@ class VerticalStepper extends StatelessWidget {
                               StepperIndicators(
                                   isLast: index == mycharges.length - 1),
                               Expanded(
-                                child: Text(
-                                  mytimings[index],
-                                  style: Theme.of(context).textTheme.labelSmall,
+                                child: Align(
+                                  alignment: index != mycharges.length - 1
+                                      ? Alignment.topLeft
+                                      : Alignment.bottomLeft,
+                                  child: Text(
+                                    mytimings[index],
+                                    style:
+                                        Theme.of(context).textTheme.labelSmall,
+                                  ),
                                 ),
                               ),
                               Expanded(
-                                child: Text(
-                                  value,
-                                  style: Theme.of(context).textTheme.labelSmall,
-                                  textAlign: TextAlign.right,
+                                child: Padding(
+                                  padding: EdgeInsets.only(
+                                      bottom: index != mycharges.length - 1
+                                          ? 40.0
+                                          : 0.0),
+                                  child: Text(
+                                    value,
+                                    style:
+                                        Theme.of(context).textTheme.labelSmall,
+                                    textAlign: TextAlign.right,
+                                  ),
                                 ),
                               ),
                             ],

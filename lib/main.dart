@@ -36,7 +36,7 @@ class _MyHomePageState extends State<MyHomePage> {
     FlightDetail(
       flightName: "Air Asia",
       flightNumber: "I5-1562",
-      departureName: "Bangalore",
+      departureName: "Bangalore Bhubaneshwar Bhubaneshwar",
       departureCode: "BLR",
       departureTerminal: "Terminal 2",
       arrivalName: "Bhubaneshwar",

@@ -22,8 +22,8 @@ class HorizontalStepper extends StatelessWidget {
               return [
                 StepperIndicators(
                     flightDetail: flightDetails[index],
-                    firstItem: index != 0,
-                    endItem: duration != ""),
+                    firstItem: index == 0,
+                    endItem: index == flightDetails.length - 1),
                 (index != flightDetails.length - 1)
                     ? DashedStepperIndicators(
                         duration: duration,
@@ -118,7 +118,7 @@ class StepperIndicators extends StatelessWidget {
                   // const SizedBox(
                   //   width: 60,
                   // ),
-                  firstItem && !endItem
+                  !firstItem
                       ? Expanded(
                           child: Padding(
                             padding: const EdgeInsets.only(right: 15.0),
@@ -278,7 +278,7 @@ class StepperIndicators extends StatelessWidget {
                   // const SizedBox(
                   //   width: 60,
                   // ),
-                  !firstItem && endItem
+                  !endItem
                       ? Expanded(
                           child: Padding(
                             padding: const EdgeInsets.only(left: 15.0),
